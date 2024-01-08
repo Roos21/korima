@@ -11,6 +11,7 @@ from django.utils import timezone
 
 # from phonenumber_field.modelfields import PhoneNumberField
 
+
 class Genre(models.Model):
     GENRE = (
         ("Masculin", "Masculin"),
@@ -19,6 +20,7 @@ class Genre(models.Model):
     genre = models.CharField(max_length=50, choices=GENRE)
     # Including the type of id in the id itself:
     reference_id = HashidField(prefix="gender_", min_length=20, primary_key=True)
+
     def __str__(self) -> str:
         return self.genre
 
@@ -68,7 +70,9 @@ class Patient(CustomUser):
 
 
 class AntecedantsMedicaux(models.Model):
-    reference_id = HashidField(prefix="medical_antecedents_", min_length=20, primary_key=True)
+    reference_id = HashidField(
+        prefix="medical_antecedents_", min_length=20, primary_key=True
+    )
     libele = models.CharField(
         max_length=100,
         verbose_name="Libellé",
@@ -83,7 +87,9 @@ class AntecedantsMedicaux(models.Model):
 
 
 class PlanDeSuivi(models.Model):
-    reference_id = HashidField(prefix="follow-up_plan_", min_length=20, primary_key=True)
+    reference_id = HashidField(
+        prefix="follow-up_plan_", min_length=20, primary_key=True
+    )
     description = models.CharField(
         max_length=200,
         verbose_name="Description",
