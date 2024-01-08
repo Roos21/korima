@@ -3,9 +3,13 @@ from django.db import models
 # Create your models here.
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from hashid_field import HashidField
+from django.utils.translation import gettext_lazy as _
+from .managers import CustomUserManager
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.utils import timezone
 
 # from phonenumber_field.modelfields import PhoneNumberField
-
 
 class Genre(models.Model):
     GENRE = (
@@ -13,20 +17,17 @@ class Genre(models.Model):
         ("Feminin", "Feminin"),
     )
     genre = models.CharField(max_length=50, choices=GENRE)
-
+    # Including the type of id in the id itself:
+    reference_id = HashidField(prefix="gender_", min_length=20, primary_key=True)
     def __str__(self) -> str:
         return self.genre
 
 
-class CustomUser(AbstractUser):
-    nom = models.CharField(
-        max_length=100, verbose_name="Nom", help_text="Entrez le nom de l'utilisateur"
-    )
-    prenom = models.CharField(
-        max_length=100,
-        verbose_name="Prénom",
-        help_text="Entrez le prénom de l'utilisateur",
-    )
+class CustomUser(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(_("email address"), unique=True)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    date_joined = models.DateTimeField(default=timezone.now)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, verbose_name="Genre")
     age = models.IntegerField(
         verbose_name="Âge", help_text="Entrez l'âge de l'utilisateur", null=True
@@ -41,12 +42,17 @@ class CustomUser(AbstractUser):
         verbose_name="Quartier",
         help_text="Entrez le quartier de l'utilisateur",
     )
-    mail = models.EmailField(
-        verbose_name="E-mail", help_text="Entrez l'adresse e-mail de l'utilisateur"
-    )
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.email
 
 
 class Praticien(CustomUser):
+    reference_id = HashidField(prefix="practitioner_", min_length=20, primary_key=True)
     fonction = models.CharField(
         max_length=100,
         verbose_name="Fonction",
@@ -55,12 +61,14 @@ class Praticien(CustomUser):
 
 
 class Patient(CustomUser):
+    reference_id = HashidField(prefix="patient_", min_length=20, primary_key=True)
     date = models.DateTimeField(
         verbose_name="Date", help_text="Entrez la date du patient"
     )
 
 
 class AntecedantsMedicaux(models.Model):
+    reference_id = HashidField(prefix="medical_antecedents_", min_length=20, primary_key=True)
     libele = models.CharField(
         max_length=100,
         verbose_name="Libellé",
@@ -75,6 +83,7 @@ class AntecedantsMedicaux(models.Model):
 
 
 class PlanDeSuivi(models.Model):
+    reference_id = HashidField(prefix="follow-up_plan_", min_length=20, primary_key=True)
     description = models.CharField(
         max_length=200,
         verbose_name="Description",
@@ -88,6 +97,8 @@ class PlanDeSuivi(models.Model):
 
 
 class Exercice(models.Model):
+    reference_id = HashidField(prefix="exercise_", min_length=20, primary_key=True)
+
     titre = models.CharField(
         max_length=100, verbose_name="Titre", help_text="Entrez le titre de l'exercice"
     )
@@ -105,6 +116,8 @@ class Exercice(models.Model):
 
 
 class Seance(models.Model):
+    reference_id = HashidField(prefix="session_", min_length=20, primary_key=True)
+
     titre = models.CharField(
         max_length=100, verbose_name="Titre", help_text="Entrez le titre de la séance"
     )
@@ -117,6 +130,8 @@ class Seance(models.Model):
 
 
 class Chat(models.Model):
+    reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
+
     source = models.CharField(
         max_length=100, verbose_name="Source", help_text="Entrez la source du chat"
     )
@@ -131,6 +146,8 @@ class Chat(models.Model):
 
 
 class RendezVous(models.Model):
+    reference_id = HashidField(prefix="appointment_", min_length=20, primary_key=True)
+
     patient = models.ForeignKey(
         Patient,
         related_name="patient_rdv",
@@ -157,6 +174,8 @@ class RendezVous(models.Model):
 
 
 class Equipement(models.Model):
+    reference_id = HashidField(prefix="product_", min_length=20, primary_key=True)
+
     nom = models.CharField(
         max_length=100, verbose_name="Nom", help_text="Entrez le nom de l'équipement"
     )
@@ -174,6 +193,8 @@ class Equipement(models.Model):
 
 
 class Commande(models.Model):
+    reference_id = HashidField(prefix="command_", min_length=20, primary_key=True)
+
     equipement = models.ForeignKey(
         Equipement, on_delete=models.CASCADE, verbose_name="Équipement"
     )
