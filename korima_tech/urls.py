@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("dashboard", include("dashboard.urls", namespace='dashboard')),
+    path("admin/clearcache/", include("clearcache.urls")),
+    path("dashboard", include("dashboard.urls", namespace="dashboard")),
 ]

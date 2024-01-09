@@ -26,11 +26,40 @@ class Genre(models.Model):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
+    reference_id = HashidField(prefix="practitioner_", min_length=20, primary_key=True)
+    username = models.CharField(max_length=100, unique=True)
     email = models.EmailField(_("email address"), unique=True)
+    first_name = models.CharField(_("first name"), max_length=150)
+    last_name = models.CharField(_("first name"), max_length=150)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE, verbose_name="Genre")
+
+    USERNAME_FIELD = "username"
+    REQUIRED_FIELDS = ["email"]
+
+    objects = CustomUserManager()
+
+    def __str__(self):
+        return self.email
+
+
+class Praticien(models.Model):
+    reference_id = HashidField(prefix="practitioner_", min_length=20, primary_key=True)
+    user_reference = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        default=1,
+        related_name="reference_utilisateur",
+    )
+    fonction = models.CharField(
+        max_length=100,
+        verbose_name="Fonction",
+        help_text="Entrez la fonction du praticien",
+    )
+    genre = models.ForeignKey(
+        Genre, on_delete=models.CASCADE, verbose_name="Genre", default=1
+    )
     age = models.IntegerField(
         verbose_name="Âge", help_text="Entrez l'âge de l'utilisateur", null=True
     )
@@ -44,28 +73,35 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name="Quartier",
         help_text="Entrez le quartier de l'utilisateur",
     )
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
-
-    objects = CustomUserManager()
-
-    def __str__(self):
-        return self.email
 
 
-class Praticien(CustomUser):
-    reference_id = HashidField(prefix="practitioner_", min_length=20, primary_key=True)
-    fonction = models.CharField(
-        max_length=100,
-        verbose_name="Fonction",
-        help_text="Entrez la fonction du praticien",
+class Patient(models.Model):
+    reference_id = HashidField(prefix="patient_", min_length=20, primary_key=True)
+    user_reference = models.ForeignKey(
+        CustomUser,
+        on_delete=models.CASCADE,
+        default=1,
+        related_name="p_reference_utilisateur",
     )
 
-
-class Patient(CustomUser):
-    reference_id = HashidField(prefix="patient_", min_length=20, primary_key=True)
     date = models.DateTimeField(
         verbose_name="Date", help_text="Entrez la date du patient"
+    )
+    genre = models.ForeignKey(
+        Genre, on_delete=models.CASCADE, verbose_name="Genre", default=1
+    )
+    age = models.IntegerField(
+        verbose_name="Âge", help_text="Entrez l'âge de l'utilisateur", null=True
+    )
+    ville = models.CharField(
+        max_length=100,
+        verbose_name="Ville",
+        help_text="Entrez la ville de l'utilisateur",
+    )
+    quartier = models.CharField(
+        max_length=100,
+        verbose_name="Quartier",
+        help_text="Entrez le quartier de l'utilisateur",
     )
 
 
