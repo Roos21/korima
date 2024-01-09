@@ -16,3 +16,9 @@ class PatientAdmin(admin.ModelAdmin):
     # search_fields = ("f__startswith", )
     list_display = ("reference_id", "user_reference", "genre")
     fields = ("date", "genre", "age", "ville", "quartier", "user_reference")
+
+@admin.register(AntecedantsMedicaux)
+class AntecedantsMedicauxAdmin(admin.ModelAdmin):
+    # search_fields = ("f__startswith", )
+    list_display = ("reference_id", "libele", "patient")
+    #fields = ("date", "genre", "age", "ville", "quartier", "user_reference")
