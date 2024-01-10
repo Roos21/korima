@@ -136,6 +136,8 @@ class PlanDeSuivi(models.Model):
         verbose_name="Période",
         help_text="Entrez la période du plan de suivi",
     )
+    
+    patient = models.ForeignKey('Patient', related_name='plans_de_suivi', on_delete=models.CASCADE, default=1)
 
 
 class Exercice(models.Model):
@@ -155,7 +157,11 @@ class Exercice(models.Model):
     plan_de_suivi = models.ForeignKey(
         PlanDeSuivi, on_delete=models.CASCADE, verbose_name="Plan de suivi"
     )
-
+    
+    def nb_seances(self):
+        return Seance.objects.filter(exercice=self).count()
+    def seances(self):
+        return Seance.objects.filter(exercice=self)
 
 class Seance(models.Model):
     reference_id = HashidField(prefix="session_", min_length=20, primary_key=True)

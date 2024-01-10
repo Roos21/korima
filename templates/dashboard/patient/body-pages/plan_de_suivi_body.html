@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-2">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Gérer mon espace</h3>
+      </div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">Rééducation</a>
+        <a href="#" class="list-group-item list-group-item-action">Suivi de la progression</a>
+        <a href="#" class="list-group-item list-group-item-action">Télérééducation</a>
+        <a href="#" class="list-group-item list-group-item-action">Posez une question</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-6">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">{{ plan_de_suivi.reference_id }}</h3>
+        <p class="text-secondary">
+          {{ plan_de_suivi.description }}
+        </p>
+      </div>
+      <center>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/RNM11Ix_7uw?si=ySAGIwsUBw_yssbj" title="Kinésitheurapie" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </center>
+      <div class="progress progress-sm card-progress">
+        <div class="progress-bar" style="width: 38%" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100" aria-label="38% Complete">
+          <span class="visually-hidden">38% Complete</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Votre programme de rééducation</h3>
+        <ul class="steps steps-counter steps-vertical">
+          {% for exercise in exercises %}
+            {% if forloop.counter == 1 %}
+              <li class="step-item active">
+                <div class="h4 m-0">
+                  <button class="btn position-relative" style="border: none;">
+                    {{ exercise.titre }} &nbsp;&nbsp;
+                    <span class="badge bg-blue badge-pill">
+                      {% if exercise.nb_seances > 1 %}
+                        {{ exercise.nb_seances }} Séances
+                      {% else %}
+                        {{ exercise.nb_seances }} Séance
+                      {% endif %}
+                    </span>
+                  </button>
+                </div>
+                <div class="text-secondary mb-3">{{ exercise.description }}</div>
+                <ul class="steps steps-counter steps-vertical">
+                  {% for seance in exercise.seances %}
+                    <li class="step-item d-flex">
+                      <div class="col-auto">
+                        <a href="#"><span class="avatar" style="background-image: url(./static/avatars/000f.jpg)"></span></a>
+                      </div>&nbsp;&nbsp;&nbsp;
+                      <div class="col text-truncate">
+                        <a href="#" class="text-reset d-block">{{ seance.titre }}</a>
+                        <div class="d-block text-secondary text-truncate mt-n1">Some minor text tweaks</div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="#" class="list-group-item-actions"><span class="badge bg-cyan-lt">0%</span></a>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% else %}
+              <li class="step-item">
+                <div class="h4 m-0">
+                  <button class="btn position-relative" style="border: none;">
+                    {{ exercise.titre }} &nbsp;&nbsp;
+                    <span class="badge bg-blue badge-pill">
+                      {% if exercise.nb_seances > 1 %}
+                        {{ exercise.nb_seances }} Séances
+                      {% else %}
+                        {{ exercise.nb_seances }} Séance
+                      {% endif %}
+                    </span>
+                  </button>
+                </div>
+                <div class="text-secondary mb-3">{{ exercise.description }}</div>
+                <ul class="steps steps-azure steps-counter steps-vertical">
+                  {% for seance in exercise.seances %}
+                    <li class="step-item  d-flex">
+                      <div class="col-auto">
+                        <a href="#"><span class="avatar" style="background-image: url(./static/avatars/000f.jpg)"></span></a>
+                      </div>&nbsp;&nbsp;&nbsp;
+                      <div class="col text-truncate">
+                        <a href="#" class="text-reset d-block">{{ seance.titre }}</a>
+                        <div class="d-block text-secondary text-truncate mt-n1">Some minor text tweaks</div>
+                      </div>
+                      <div class="col-auto">
+                        <a href="#" class="list-group-item-actions"><span class="badge bg-cyan-lt">0%</span></a>
+                      </div>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

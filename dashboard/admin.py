@@ -13,7 +13,7 @@ class PraticienAdmin(admin.ModelAdmin):
 
 @admin.register(Patient)
 class PatientAdmin(admin.ModelAdmin):
-    # search_fields = ("f__startswith", )
+    search_fields = ("reference_id__startswith", )
     list_display = ("reference_id", "user_reference", "genre")
     fields = ("date", "genre", "age", "ville", "quartier", "user_reference")
 
