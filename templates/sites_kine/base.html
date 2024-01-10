@@ -1,0 +1,389 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>KORIMA Tech</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'img/korima-tech.png' %}" rel="icon">
+  <link href="{% static 'img/korima-tech.png' %}" rel="our-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- ======= Top Bar ======= -->
+  <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex justify-content-between">
+      <div class="contact-info d-flex align-items-center">
+        <i class="bi bi-envelope"></i> <a href="mailto:contact@example.com">contact@korima-tech.com</a>
+        <i class="bi bi-phone"></i> +235 68760608 / 97677444
+      </div>
+      <div class="d-none d-lg-flex social-links align-items-center">
+        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="index.html">Korima Tech</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="{% static 'assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      {% block menu %}
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#services">Service</a></li>
+          {% comment %} <li><a class="nav-link scrollto" href="#departments">Departement</a></li> {% endcomment %}
+          {% comment %} <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li><a href="#">Drop Down 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  <li><a href="#">Deep Drop Down 1</a></li>
+                  <li><a href="#">Deep Drop Down 2</a></li>
+                  <li><a href="#">Deep Drop Down 3</a></li>
+                  <li><a href="#">Deep Drop Down 4</a></li>
+                  <li><a href="#">Deep Drop Down 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Drop Down 2</a></li>
+              <li><a href="#">Drop Down 3</a></li>
+              <li><a href="#">Drop Down 4</a></li>
+            </ul>
+          </li> {% endcomment %}
+          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link scrollto" href="#">Equipements de rééducation</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+      {% endblock %}
+      <a href="#" class="appointment-btn scrollto"><span class="d-none d-md-inline"></span>Se connecter</a>
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+    <div class="container" style="border-radius: 2px; border: #000;">
+      <h1 style="color : #1977cc; font-family: algerian; font-style: italic;">Bienvenue à KORIMA Tech</h1>
+      <h2 style="color : #1977cc; ;font-size: 30pt;"><strong>Votre bien être, notre raison d'être!!!</strong></h2>
+    </div>
+  </section><!-- End Hero -->
+
+  <main id="main">
+
+    <!-- ======= Why Us Section ======= -->
+    <section id="why-us" class="why-us">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-4 d-flex align-items-stretch">
+            <div class="content">
+              <h3>Qui sommes nous?</h3>
+              <p style="text-align: justify;">
+                KORIMA Tech est une plateforme de suivi à distance des usagers de la réadaptation. 
+                Elle met en relation les thérapeutes et les patients pour améliorer l’accès 
+                aux services de réadaptation (kinésithérapie, prescription d’aides techniques, 
+                appui psychosocial, réadaptation à base communautaire) et permettre aux patients 
+                de quitter le cabinet et de poursuivre leur traitement à domicile. Avec une approche 
+                centrée sur le patient et des exercices adaptés et personnalisés, elle donne la possibilité 
+                au patient de planifier son temps et de solliciter une assistance via la messagerie instantanée 
+                et la communication audio/vidéo.              </p>
+              <div class="text-center">
+                {% comment %} <a href="#" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a> {% endcomment %}
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 d-flex align-items-stretch">
+            <div class="icon-boxes d-flex flex-column justify-content-center">
+              <div class="row">
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box mt-4 mt-xl-0">
+                    <i class="bi bi-lungs"></i>
+                    <h4 style="font-size:12pt;" >Humanité</h4>
+                  </div>
+                </div>
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box mt-4 mt-xl-0">
+                    <i class="bi bi-universal-access-circle"></i>
+                    <h4 style="font-size:12pt;">Accessibilité</h4>
+                  </div>
+                </div>
+                <div class="col-xl-4 d-flex align-items-stretch">
+                  <div class="icon-box mt-4 mt-xl-0">
+                    <i class="bi bi-people"></i>
+                    <h4 style="font-size:11pt;">Professionnalisme</h4>
+                  </div>
+                </div>
+              </div>
+            </div><!-- End .content-->
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Why Us Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section id="services" class="services">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Services</h2>
+          <p>En vous mettant au centre de votre prise en charge, nous vous offrons les services suivants :
+          </p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+            <div class="icon-box">
+              <div class=""><i class="fas"></i></div>
+              <h4><a href="">Soins de rééducation (en cabinet et/ou avec suivi à distance)</a></h4>
+              <ul class="list-group" style="text-align: justify;">
+                <li class="list-group-item">Kiné neuro adulte</li>
+                <li class="list-group-item">Kiné neuro pédiatrique</li>
+                <li class="list-group-item">Kiné musculosquelettique</li>
+                <li class="list-group-item">Prise en charge des suites de traumatismes</li>
+                <li class="list-group-item">Kine cardio-vasculaire et respiratoire</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+            <div class="icon-box">
+              <div class=""><i class=""></i></div>
+              <h4><a href="">Suivi personnalisé à distance</a></h4>
+              <ul class="list-group" style="text-align: justify;">
+                <li class="list-group-item">Pour les patients qui sont déchargés afin de maintenir les acquis obtenus en séances au cabinet</li>
+                <li class="list-group-item">Pour les patients issus des zones éloignées qui ont du mal à arriver au cabinet </li>
+              </ul>            
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0">
+            <div class="icon-box">
+              <div class=""><i class=""></i></div>
+              <h4><a href="">Consultance et formation</a></h4>
+              <ul class="list-group" style="text-align: justify;">
+                <li class="list-group-item">Conseils techniques en réadaptation</li>
+                <li class="list-group-item">Formations aux métiers de la réadaptation</li>
+                <li class="list-group-item">Formation communautaire sur le diagnostic et la prise en charge précoce des pathologies récurrentes</li>
+              </ul>             
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    <!-- End Services Section -->
+
+    <!-- ======= Gallery Section ======= -->
+    <section id="gallery" class="gallery">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Gallery</h2>
+        </div>
+      </div>
+
+      <div class="container-fluid">
+        <div class="row g-0">
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <img src="{% static 'img/gal-1.jpeg' %}" alt="" style="width: 100%;height: 500px;">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <img src="{% static 'img/gal-2.jpeg' %}" alt="" style="width: 100%;height: 500px;">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <img src="{% static 'img/gal-3.jpeg' %}" alt="" style="width: 100%;height: 500px;">
+              </a>
+            </div>
+          </div>
+
+          <div class="col-lg-3 col-md-4">
+            <div class="gallery-item">
+                <img src="{% static 'img/gal-5.jpg' %}" alt="" style="width: 100%;height: 500px;">
+              </a>
+            </div>
+          </div>
+          
+
+        </div>
+
+      </div>
+    </section><!-- End Gallery Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact">
+      <div class="container">
+
+        <div class="section-title">
+          <h2>Nous joindre</h2>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row mt-5">
+
+          <div class="col-lg-4">
+            <div class="info">
+              <div class="address">
+                <i class="bi bi-geo-alt"></i>
+                <h4>Location:</h4>
+                <p>N'Djaména</p>
+              </div>
+
+              <div class="email">
+                <i class="bi bi-envelope"></i>
+                <h4>Email:</h4>
+                <p>contact@korima-tech.com</p>
+              </div>
+
+              <div class="phone">
+                <i class="bi bi-phone"></i>
+                <h4>Tel:</h4>
+                <p>+235 68760608 / 97677444</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div class="col-lg-8 mt-5 mt-lg-0">
+
+            <form method="post"  action="." role="form" class="php-email-form">
+              <div class="row">
+                {% csrf_token %}
+                {{ contact_form.as_p }}
+              </div>
+              <div class="my-3">
+                <div class="loading">Chargement</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Votre message a été envoyé. Merci!</div>
+              </div>
+              <div class="text-center"><button type="submit">Envoyer le message</button></div>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Contact Section -->
+
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+
+    <div class="footer-top">
+      <div class="container">
+        <div class="row">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-3 col-md-6 footer-contact">
+            <h3>KORIMA Tech</h3>
+            <p>
+              N'Djaména<br><br>
+              <strong>Phone:</strong> +235 68760608<br>
+              <strong>Email:</strong> contact@korima-tech.com<br>
+            </p>
+          </div>
+          <div class="col-lg-4 col-md-6 footer-newsletter">
+            <h4>Rejoignez notre newsletter</h4>
+            <form method="post"  action="{% url 'home' %}">
+                {% csrf_token %}
+                {{ newsletter_form }}              
+                <input type="submit" value="Souscrire">
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="container d-md-flex py-4">
+
+      <div class="me-md-auto text-center text-md-start">
+        <div class="copyright">
+          &copy; Copyright <strong><span>KORIMA Tech</span></strong>. Tous les droits sont réservés
+
+        </div>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/ -->
+        </div>
+      </div>
+      <div class="social-links text-center text-md-right pt-3 pt-md-0">
+        <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+        <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+        <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+        <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
+
+  <div id="preloader"></div>
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/purecounter/purecounter_vanilla.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+
+</html>
