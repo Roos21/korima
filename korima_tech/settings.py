@@ -27,13 +27,12 @@ SECRET_KEY = "django-insecure-hq06(=kcg5fya)^0a#ojkkjpf0))!nhy=(dfrx(_any*%8_w_=
 DEBUG = True
 
 ALLOWED_HOSTS = []
-AUTH_USER_MODEL = "dashboard.CustomUser"
+AUTH_USER_MODEL = "authentication.CustomUser"
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    "clearcache",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -42,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # news app here
     "dashboard",
+    "authentication",
 ]
 
 MIDDLEWARE = [
