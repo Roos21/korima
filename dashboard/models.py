@@ -235,3 +235,40 @@ class Commande(models.Model):
     date = models.DateTimeField(
         verbose_name="Date", help_text="Entrez la date de la commande"
     )
+
+
+class NewsletterSubscriber(models.Model):
+    email = models.EmailField(
+        unique=True
+        )
+    subscribed_at = models.DateTimeField(
+        auto_now_add=True
+        )
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'Abonné à la newsletter'
+        verbose_name_plural = 'Abonnés à la newsletter'
+
+
+class ContactUs(models.Model):
+
+    fullname = models.CharField(
+        max_length=250, verbose_name="Nom et Prénom", 
+    )
+    email = models.EmailField(
+        verbose_name="Email", 
+    )
+    sujet = models.CharField(
+        max_length=250, verbose_name="Sujet",
+    )
+    message = models.TextField(
+        verbose_name="Message",
+    )
+    class Meta:
+        verbose_name = 'Boite à lettre'
+        verbose_name_plural = 'Boite à lettre'
+
+
