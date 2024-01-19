@@ -26,18 +26,14 @@ SECRET_KEY = "django-insecure-hq06(=kcg5fya)^0a#ojkkjpf0))!nhy=(dfrx(_any*%8_w_=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< HEAD
-ALLOWED_HOSTS = ['192.168.0.187','127.0.0.1']
-AUTH_USER_MODEL = "dashboard.CustomUser"
-=======
 ALLOWED_HOSTS = []
 AUTH_USER_MODEL = "authentication.CustomUser"
->>>>>>> 4388e5c08e4a1537cd3fe4c8b075a68918955540
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "clearcache",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -45,12 +41,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # news app here
-    "dashboard",
-<<<<<<< HEAD
-    "channels",
-=======
     "authentication",
->>>>>>> 4388e5c08e4a1537cd3fe4c8b075a68918955540
+    "dashboard",
+    
 ]
 
 MIDDLEWARE = [

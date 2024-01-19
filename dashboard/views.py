@@ -23,8 +23,10 @@ class PlanDeSuiviView(ListView):
         context["patient"] = patient
         pds = PlanDeSuivi.objects.filter(patient=patient).first()
         context["plan_de_suivi"] = pds
+        print(pds)
         exercies = Exercice.objects.filter(plan_de_suivi=pds)
         context["exercises"] = exercies
+        print(exercies)
         return context
     
 

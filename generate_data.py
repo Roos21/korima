@@ -10,10 +10,7 @@ from dashboard.models import Genre, CustomUser, Praticien, Patient, AntecedantsM
 import pytz
 fake = Faker()
 
-# Génération des genres
-genres = ["Masculin", "Feminin"]
-for genre in genres:
-    Genre.objects.get_or_create(genre=genre)
+
 
 # Génération des antécédents médicaux
 for _ in range(100):
@@ -33,7 +30,7 @@ for _ in range(100):
 
 # Génération des exercices
 for _ in range(100):
-    plan_de_suivi = PlanDeSuivi.objects.order_by("?").first()
+    plan_de_suivi = PlanDeSuivi.objects.first()
     Exercice.objects.create(
         titre=fake.word(),
         description=fake.sentence(),
