@@ -31,10 +31,21 @@ fake = Faker()
 #         is_active=fake.boolean(),
 #         date_joined=fake.date_time_this_decade(tzinfo=pytz.utc),  # Utilisation de pytz.utc
 #     )
+<<<<<<< HEAD
     
 #     user.set_password(fake.user_name())
 
 #     user.save() 
+=======
+
+#     user.set_password(fake.user_name())
+
+#     user.save()
+# Génération des genres
+genres = ["Masculin", "Feminin"]
+for genre in genres:
+    Genre.objects.get_or_create(genre=genre)
+>>>>>>> 3e064453b5136023d3e801df8179b4d47f1b4184
 for _ in range(10): 
     # Génération des praticiens
     Praticien.objects.create(

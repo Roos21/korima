@@ -41,9 +41,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # news app here
-    "authentication",
     "dashboard",
-    
+    "authentication",
 ]
 
 MIDDLEWARE = [
