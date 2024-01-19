@@ -10,24 +10,29 @@ from dashboard.models import Genre, CustomUser, Praticien, Patient, AntecedantsM
 
 fake = Faker()
 # Génération des utilisateurs
-""" for _ in range(10):
-    email = fake.email()
+# for _ in range(10):
+#     email = fake.email()
 
-    while CustomUser.objects.filter(email=email).exists():
-        email = fake.email()
+#     while CustomUser.objects.filter(email=email).exists():
+#         email = fake.email()
 
-    user = CustomUser(
-        username=fake.user_name(),
-        email=email,
-        first_name=fake.first_name(),
-        last_name=fake.last_name(),
-        is_staff=fake.boolean(),
-        is_active=fake.boolean(),
-        date_joined=fake.date_time_this_decade(tzinfo=pytz.utc),  # Utilisation de pytz.utc
-    )
+#     user = CustomUser(
+#         username=fake.user_name(),
+#         email=email,
+#         first_name=fake.first_name(),
+#         last_name=fake.last_name(),
+#         is_staff=fake.boolean(),
+#         is_active=fake.boolean(),
+#         date_joined=fake.date_time_this_decade(tzinfo=pytz.utc),  # Utilisation de pytz.utc
+#     )
 
-    user.save() """
-""" """
+#     user.set_password(fake.user_name())
+
+#     user.save()
+# Génération des genres
+genres = ["Masculin", "Feminin"]
+for genre in genres:
+    Genre.objects.get_or_create(genre=genre)
 for _ in range(10): 
     # Génération des praticiens
     Praticien.objects.create(
