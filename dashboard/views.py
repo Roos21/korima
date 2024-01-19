@@ -26,5 +26,11 @@ class PlanDeSuiviView(ListView):
         exercies = Exercice.objects.filter(plan_de_suivi=pds)
         context["exercises"] = exercies
         return context
+    
+
+def videocall(request):
+
+    name = "Anonyme"
+    return render(request, f"{app_path}video_call.html", {'name':name})
 
 
