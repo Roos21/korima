@@ -7,6 +7,7 @@ from hashid_field import HashidField
 from authentication.models import CustomUser
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
+from django.core.validators import MinValueValidator
 
 # from phonenumber_field.modelfields import PhoneNumberField
 
@@ -208,15 +209,21 @@ class Equipement(models.Model):
         max_length=100, verbose_name="Nom", help_text="Entrez le nom de l'équipement"
     )
     type = models.CharField(
-        max_length=100, verbose_name="Type", help_text="Entrez le type de l'équipement"
+        max_length=100, verbose_name="Type", help_text="Entrez le type de l'équipement", blank=True
     )
-    description = models.CharField(
-        max_length=200,
+    description = models.TextField(
+        max_length=255,
         verbose_name="Description",
         help_text="Entrez la description de l'équipement",
     )
+    conseil = models.TextField(
+        max_length=255,help_text="Entrez un bref conseil d'une phrase", default='',
+    )
     prix = models.FloatField(
-        verbose_name="Prix", help_text="Entrez le prix de l'équipement"
+        validators=[MinValueValidator(1)],verbose_name="Prix", help_text="Entrez le prix de l'équipement"
+    )
+    quantite = models.IntegerField(
+        validators=[MinValueValidator(1)], verbose_name="Quantité", help_text="Entrez la quantité disponible de l'équipement",default=1,
     )
 
 

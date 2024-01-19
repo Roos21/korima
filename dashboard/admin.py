@@ -33,3 +33,17 @@ class AntecedantsMedicauxAdmin(admin.ModelAdmin):
     # search_fields = ("f__startswith", )
     list_display = ("reference_id", "libele", "patient")
     #fields = ("date", "genre", "age", "ville", "quartier", "user_reference")
+
+@admin.register(Equipement)
+class EquipementAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'type', 'prix','quantite')
+    search_fields = ['nom', 'type', 'description']
+    list_filter = ['type']
+    ordering = ['nom']
+
+@admin.register(Commande)
+class CommandeAdmin(admin.ModelAdmin):
+    list_display = ('equipement', 'patient', 'quantite', 'date')
+    search_fields = ['equipement__nom', 'patient__nom']
+    list_filter = ['date']
+    ordering = ['-date']
