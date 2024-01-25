@@ -63,6 +63,8 @@ TEMPLATES = [
         "DIRS": [
             os.path.join(BASE_DIR, "templates"),
             os.path.join(BASE_DIR, "templates/dashboard"),
+            os.path.join(BASE_DIR, "templates/authentication"),
+            os.path.join(BASE_DIR, "templates/sites_kine"),
             os.path.join(BASE_DIR, "templates/dashboard/patient",),
         ],
         "APP_DIRS": True,

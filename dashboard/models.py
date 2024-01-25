@@ -200,7 +200,28 @@ class RendezVous(models.Model):
         verbose_name="Détails",
         help_text="Entrez les détails du rendez-vous",
     )
+    
+    def time_until_rendezvous(self):
+        # Récupère la date actuelle
+        now = timezone.now()
 
+        # Calcule la différence entre la date du rendez-vous et la date actuelle
+        time_until_rendezvous = self.date - now
+
+        # Convertit la différence en jours, heures et minutes
+        days = time_until_rendezvous.days
+        hours, remainder = divmod(time_until_rendezvous.seconds, 3600)
+        minutes, _ = divmod(remainder, 60)
+
+        # Crée une chaîne de caractères descriptive
+        if days > 0:
+            return f"Dans {days} {'jours' if days > 1 else 'jour'}"
+        elif hours > 0:
+            return f"Dans {hours} {'heures' if hours > 1 else 'heure'}"
+        elif minutes > 0:
+            return f"Dans {minutes} {'minutes' if minutes > 1 else 'minute'}"
+        else:
+            return "C'est maintenant"
 
 class Equipement(models.Model):
     reference_id = HashidField(prefix="product_", min_length=20, primary_key=True)

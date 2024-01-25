@@ -21,6 +21,7 @@ from .views import HomePage
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("admin/clearcache/", include("clearcache.urls")),
-    path("dashboard", include("dashboard.urls", namespace="dashboard")),
+    path("dashboard/", include("dashboard.urls", namespace="dashboard")),
+    path("authentication/", include("authentication.urls", namespace="authentication")),
     path("", HomePage.as_view(), name="home"),
 ]
