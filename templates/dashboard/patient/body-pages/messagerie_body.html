@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messagerie</title>
+    <!-- Ajoutez ici vos liens vers les fichiers CSS si nécessaire -->
+    <script>
+        // Obtenez le nom d'utilisateur de l'utilisateur courant
+        var username = "{{ user_1 }}";
+        // Créez une connexion WebSocket
+        var chatSocket = new WebSocket(
+            'ws://' + window.location.host +
+            '/ws/' + '{{ user_1 }}' + '/' + '{{ user_2 }}' + '/'
+        );
+
+        // Gestion des erreurs pour la connexion WebSocket
+        chatSocket.onerror = function(event) {
+            console.error('WebSocket error:', event);
+        };
+
+        // Fonction pour ajouter un message au conteneur de messages
+        function appendMessage(sender, content) {
+            document.querySelector('#messages').innerHTML += '<br><b>' + sender + '</b>: ' + content;
+        }
+
+        // Gestionnaire d'événements pour recevoir les messages du serveur WebSocket
+        chatSocket.onmessage = function(e) {
+            var data = JSON.parse(e.data);
+            var message = data['message'];
+            var sender = data['username'];
+            appendMessage(sender, message);
+        };
+
+        // Gestionnaire d'événements pour envoyer un message lorsque le formulaire est soumis
+        document.querySelector('#message-form').onsubmit = function(e) {
+            e.preventDefault();
+            var messageInput = document.querySelector('#message-input');
+            var message = messageInput.value;
+            chatSocket.send(JSON.stringify({
+                'message': message,
+                'username': username,
+            }));
+            messageInput.value = '';
+        };
+    </script>
+</head>
+<body>
+    <div id="chat-container">
+        <div id="messages-container">
+            <div id="messages" style="height: 200px; overflow-y: scroll;">
+                <!-- Afficher les messages ici -->
+                {% for message in messages %}
+                    {{ message.sender }}: {{ message.content }}<br>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="input-container">
+            <form id="message-form">
+                {% csrf_token %}
+                <input type="text" id="message-input" placeholder="Entrez votre message ici" />
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
