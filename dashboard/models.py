@@ -55,6 +55,56 @@ class Praticien(models.Model):
         help_text="Entrez le quartier de l'utilisateur",
     )
 
+class Equipement(models.Model):
+    reference_id = HashidField(prefix="product_", min_length=20, primary_key=True)
+
+    nom = models.CharField(
+        max_length=100, verbose_name="Nom", help_text="Entrez le nom de l'équipement"
+    )
+    type = models.CharField(
+        max_length=100, verbose_name="Type", help_text="Entrez le type de l'équipement", blank=True
+    )
+    description = models.TextField(
+        max_length=255,
+        verbose_name="Description",
+        help_text="Entrez la description de l'équipement",
+    )
+    conseil = models.TextField(
+        max_length=255,help_text="Entrez un bref conseil d'une phrase", default='',
+    )
+    prix = models.FloatField(
+        validators=[MinValueValidator(1)],verbose_name="Prix", help_text="Entrez le prix de l'équipement"
+    )
+    quantite = models.IntegerField(
+        validators=[MinValueValidator(1)], verbose_name="Quantité", help_text="Entrez la quantité disponible de l'équipement",default=1,
+    )
+
+class AntecedantsMedicaux(models.Model):
+    reference_id = HashidField(
+        prefix="medical_antecedents_", min_length=20, primary_key=True
+    )
+    libele = models.CharField(
+        max_length=100,
+        verbose_name="Libellé",
+        help_text="Entrez le libellé des antécédents médicaux",
+    )
+    date = models.DateTimeField(
+        verbose_name="Date", help_text="Entrez la date des antécédents médicaux"
+    )
+
+class Commande(models.Model):
+    reference_id = HashidField(prefix="command_", min_length=20, primary_key=True)
+
+    equipement = models.ForeignKey(
+        Equipement, on_delete=models.CASCADE, verbose_name="Équipement"
+    )
+    quantite = models.IntegerField(
+        verbose_name="Quantité", help_text="Entrez la quantité commandée"
+    )
+    date = models.DateTimeField(
+        verbose_name="Date", help_text="Entrez la date de la commande"
+    )
+
 
 class Patient(models.Model):
     reference_id = HashidField(prefix="patient_", min_length=20, primary_key=True)
@@ -84,23 +134,9 @@ class Patient(models.Model):
         verbose_name="Quartier",
         help_text="Entrez le quartier de l'utilisateur",
     )
+    commandes = models.ManyToManyField(Commande, related_name='patients', blank=True)
+    antecedents_medicaux = models.ManyToManyField(AntecedantsMedicaux, related_name='patients_antecedents_medicaux', blank=True)
 
-
-class AntecedantsMedicaux(models.Model):
-    reference_id = HashidField(
-        prefix="medical_antecedents_", min_length=20, primary_key=True
-    )
-    libele = models.CharField(
-        max_length=100,
-        verbose_name="Libellé",
-        help_text="Entrez le libellé des antécédents médicaux",
-    )
-    patient = models.ForeignKey(
-        Patient, on_delete=models.CASCADE, verbose_name="Patient"
-    )
-    date = models.DateTimeField(
-        verbose_name="Date", help_text="Entrez la date des antécédents médicaux"
-    )
 
 
 class PlanDeSuivi(models.Model):
@@ -156,7 +192,8 @@ class Seance(models.Model):
     exercice = models.ForeignKey(
         Exercice, on_delete=models.CASCADE, verbose_name="Exercice"
     )
-
+    is_validated = models.BooleanField(default=False)
+    comment = models.TextField(max_length=2048, verbose_name="Comment", help_text='Entrez le commentaire de la séance', default='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos ut labore rem porro. Totam culpa atque ad! Numquam, deleniti cupiditate est ea, cum repellat saepe animi accusamus aliquid necessitatibus facilis?')
 
 class Chat(models.Model):
     reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
@@ -201,6 +238,8 @@ class RendezVous(models.Model):
         help_text="Entrez les détails du rendez-vous",
     )
     
+    antecedents_medicaux = models.ManyToManyField(AntecedantsMedicaux, related_name='patients', blank=True)
+    
     def time_until_rendezvous(self):
         # Récupère la date actuelle
         now = timezone.now()
@@ -222,47 +261,6 @@ class RendezVous(models.Model):
             return f"Dans {minutes} {'minutes' if minutes > 1 else 'minute'}"
         else:
             return "C'est maintenant"
-
-class Equipement(models.Model):
-    reference_id = HashidField(prefix="product_", min_length=20, primary_key=True)
-
-    nom = models.CharField(
-        max_length=100, verbose_name="Nom", help_text="Entrez le nom de l'équipement"
-    )
-    type = models.CharField(
-        max_length=100, verbose_name="Type", help_text="Entrez le type de l'équipement", blank=True
-    )
-    description = models.TextField(
-        max_length=255,
-        verbose_name="Description",
-        help_text="Entrez la description de l'équipement",
-    )
-    conseil = models.TextField(
-        max_length=255,help_text="Entrez un bref conseil d'une phrase", default='',
-    )
-    prix = models.FloatField(
-        validators=[MinValueValidator(1)],verbose_name="Prix", help_text="Entrez le prix de l'équipement"
-    )
-    quantite = models.IntegerField(
-        validators=[MinValueValidator(1)], verbose_name="Quantité", help_text="Entrez la quantité disponible de l'équipement",default=1,
-    )
-
-
-class Commande(models.Model):
-    reference_id = HashidField(prefix="command_", min_length=20, primary_key=True)
-
-    equipement = models.ForeignKey(
-        Equipement, on_delete=models.CASCADE, verbose_name="Équipement"
-    )
-    patient = models.ForeignKey(
-        Patient, on_delete=models.CASCADE, verbose_name="Patient"
-    )
-    quantite = models.IntegerField(
-        verbose_name="Quantité", help_text="Entrez la quantité commandée"
-    )
-    date = models.DateTimeField(
-        verbose_name="Date", help_text="Entrez la date de la commande"
-    )
 
 
 class NewsletterSubscriber(models.Model):
