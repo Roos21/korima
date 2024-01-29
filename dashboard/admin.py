@@ -31,7 +31,7 @@ class ContactUsAdmin(admin.ModelAdmin):
 @admin.register(AntecedantsMedicaux)
 class AntecedantsMedicauxAdmin(admin.ModelAdmin):
     # search_fields = ("f__startswith", )
-    list_display = ("reference_id", "libele", "patient")
+    list_display = ("reference_id", "libele",)
     #fields = ("date", "genre", "age", "ville", "quartier", "user_reference")
 
 @admin.register(Equipement)
@@ -43,7 +43,7 @@ class EquipementAdmin(admin.ModelAdmin):
 
 @admin.register(Commande)
 class CommandeAdmin(admin.ModelAdmin):
-    list_display = ('equipement', 'patient', 'quantite', 'date')
+    list_display = ('equipement', 'quantite', 'date')
     search_fields = ['equipement__nom', 'patient__nom']
     list_filter = ['date']
     ordering = ['-date']

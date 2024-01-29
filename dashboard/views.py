@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.decorators import login_required
 from .models import Exercice, Patient, PlanDeSuivi, RendezVous, Room, Message
@@ -22,6 +22,8 @@ def home(request):
         patient = Patient.objects.get(user_reference=request.user)
         patient_rendezvous = RendezVous.objects.filter(patient=patient, date__gt=now).order_by('date')
         pds = PlanDeSuivi.objects.filter(patient=patient).order_by('-reference_id')
+        antecedents_medicaux = patient.antecedents_medicaux.all()
+        equipements_commandes = patient.commandes.all()
         if len(pds) >= 5:
             pds = pds[:2]
     except:
@@ -36,15 +38,26 @@ class PlanDeSuiviView(ListView):
     
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
         patient = Patient.objects.get(user_reference=self.request.user)
-        context["patient"] = patient
         pds = PlanDeSuivi.objects.filter(patient=patient).first()
+        exercice = Exercice.objects.filter(plan_de_suivi=pds).last()
+        #exercice = get_object_or_404(Exercice, reference_id=exercie.reference_id)
+        seance_actuelle = exercice.seances().filter(is_validated=True).first()
+        seance_precedente = None
+        if seance_actuelle:
+            seance_precedente = exercice.seances().filter(reference_id__lt=seance_actuelle.reference_id).last()
+
+        # Récupérer la séance suivante
+        seance_suivante = exercice.seances().filter(reference_id__gt=seance_actuelle.reference_id).first()
+        seances = exercice.seances()
+        context = super().get_context_data(**kwargs)
+        context["patient"] = patient
         context["plan_de_suivi"] = pds
-        print(pds)
-        exercies = Exercice.objects.filter(plan_de_suivi=pds)
-        context["exercises"] = exercies
-        print(exercies)
+        context["exercice"] = exercice
+        context['seance_actuelle'] = seance_actuelle
+        context['seance_precedente'] = seance_precedente
+        context['seance_suivante'] = seance_suivante
+        context['seances'] = seances
         return context
     
 

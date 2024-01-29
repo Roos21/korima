@@ -8,5 +8,7 @@ urlpatterns = [
     path("plan-de-suivi/", PlanDeSuiviView.as_view(), name='plan-de-suivi'),
     path("telereeducation/", videocall, name='telereeducation'),
     path("chat/", room, name='chat'),
+    path("plan-de-suivi/<str:exercice_id>/<str:seance_id>/", PlanDeSuiviView.as_view(), name='exercice_detail'),
+    
 
 ]
