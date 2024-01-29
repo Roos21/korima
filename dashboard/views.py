@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.decorators import login_required
-from .models import Exercice, Patient, PlanDeSuivi, RendezVous
+from .models import Exercice, Patient, PlanDeSuivi, RendezVous, Room, Message
 from django.utils import timezone
 # Create your views here.
 app_name = "dashboard"
@@ -50,7 +50,23 @@ class PlanDeSuiviView(ListView):
 
 def videocall(request):
 
-    name = "Anonyme"
+    name = request.user
     return render(request, f"{app_path}video_call.html", {'name':name})
+
+
+# @login_required
+# def rooms(request):
+#     """ Liste des groupe de chat """
+#     rooms = Room.objects.all()
+#     return render(request, 'room/rooms.html', {'rooms': rooms})
+
+@login_required
+def room(request):
+    """ Details groupe de chat """
+    room_name = Room.objects.get(slug__contains=request.user.username)
+    print(room_name.name)
+    #rooms = Room.objects.all()    
+    messages = Message.objects.filter(room=room_name)[0:30]
+    return render(request, f"{app_path}messagerie.html", {'room': room_name, 'messages':messages})
 
 

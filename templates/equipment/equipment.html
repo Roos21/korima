@@ -1,0 +1,71 @@
+{% extends "sites_kine/base.html" %}
+
+
+{% block menu %}
+      <nav id="navbar" class="navbar order-last order-lg-0">
+        <ul>
+          <li><a class="nav-link scrollto" href="/">Home</a></li>
+          <li><a class="nav-link scrollto" href="/">Service</a></li>
+          <li><a class="nav-link scrollto" href="/">Contact</a></li>
+          <li><a class="nav-link scrollto active" href="{% url 'equipement:equipement' %}">Equipements de rééducation</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+{% endblock %}
+
+
+
+{% block hero %}
+<br><br><br><br>
+{% endblock %}
+
+
+
+
+{% block main %}
+
+    <!-- Services Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="text-center mx-auto mb-5" style="max-width: 600px;">
+                <h1 class="text-primary text-uppercase" style="letter-spacing: 5px;">Equipements de rééducation</h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 footer-newsletter">
+                    <form method="post"  action=".">
+                        {% csrf_token %}
+                        <input type="text" name="keyworld" class="form-control" type="text" placeholder="Recherche" required="" aria-required="true">
+                        <br>
+                        <input type="submit" class="btn btn-primary" value="Rechercher">
+                    </form>
+                </div>
+                <div class="col-lg-8 col-md-6 footer-newsletter">
+                    <h5 class="text-primary text-uppercase" style="letter-spacing: 5px;">Filtrer</h5>
+                </div>
+            </div>    
+            <div class="row g-5">
+
+                {% for equipement in equipements  %}
+                    <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                        <div class="service-item bg-light border-bottom border-5 border-primary rounded">
+                            <div class="position-relative p-5">
+                                <i class="flaticon-cctv d-block display-1 fw-normal text-secondary mb-3"></i>
+                                <h5 class="text-primary mb-0">$ {{equipement.prix}}</h5>
+                                <h3 class="mb-3">{{equipement.nom}}</h3>
+                                <p>{{equipement.description}}</p>
+                                <a href="">Detail<i class="bi bi-arrow-right ms-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+        </div>
+    </div>
+    <!-- Services End -->
+
+{% endblock %}
+
+
+
+{% block newsletter %}
+<br><br>
+{% endblock %}

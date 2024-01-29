@@ -23,5 +23,6 @@ urlpatterns = [
     path("admin/clearcache/", include("clearcache.urls")),
     path("dashboard/", include("dashboard.urls", namespace="dashboard")),
     path("authentication/", include("authentication.urls", namespace="authentication")),
+    path("equipements/", include("equipements.urls", namespace="equipements")),
     path("", HomePage.as_view(), name="home"),
 ]
