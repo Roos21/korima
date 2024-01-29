@@ -31,7 +31,7 @@ def home(request):
     return render(request, f"{app_path}dashboard.html", locals())
 
 
-
+@login_required(login_url='/authentication/login')
 class PlanDeSuiviView(ListView):
     model = PlanDeSuivi
     template_name = f"{app_path}plan_de_suivi.html"
@@ -64,6 +64,7 @@ class PlanDeSuiviView(ListView):
         return context
     
 
+@login_required(login_url='/authentication/login')
 class ValidateSeance(ListView):
     model = PlanDeSuivi
     template_name = f"{app_path}plan_de_suivi.html"
