@@ -6,16 +6,13 @@ urlpatterns = [
     path("", home),
     path("", home, name="dashboard"),
     path("plan-de-suivi/", PlanDeSuiviView.as_view(), name='plan-de-suivi'),
-<<<<<<< HEAD
     path("telereeducation/", videocall, name='telereeducation'),
     path("chat/", room, name='chat'),
     path("plan-de-suivi/<str:exercice_id>/<str:seance_id>/", PlanDeSuiviView.as_view(), name='exercice_detail'),
-=======
     path("plan-de-suivi/<str:exercice_id>/<str:seance_id>/", ValidateSeance.as_view(), name='exercice_detail'),
     path("plan-de-suivi/suivi-progression/", ValidateSeance.as_view(), name='suivi_progression'),
     path("plan-de-suivi/tele-reeducation/", ValidateSeance.as_view(), name='tele_reeducation'),
     path("plan-de-suivi/ask-question/", ValidateSeance.as_view(), name='ask_question'),
->>>>>>> 65a67a021da2f8f33075ef68d2fa1aa95602a40e
     
 
 ]

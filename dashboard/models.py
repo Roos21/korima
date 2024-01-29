@@ -222,21 +222,17 @@ class Seance(models.Model):
     )
     is_validated = models.BooleanField(default=False)
     comment = models.TextField(max_length=2048, verbose_name="Comment", help_text='Entrez le commentaire de la séance', default='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos ut labore rem porro. Totam culpa atque ad! Numquam, deleniti cupiditate est ea, cum repellat saepe animi accusamus aliquid necessitatibus facilis?')
-<<<<<<< HEAD
 
 # class Chat(models.Model):
 #     reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
-=======
     date_validation = models.DateTimeField(null=True, blank=True)
     
     def valider_seance(self):
         self.is_validated = True
         self.date_validation = timezone.now()
         self.save()
-class Chat(models.Model):
-    reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
->>>>>>> 65a67a021da2f8f33075ef68d2fa1aa95602a40e
-
+# class Chat(models.Model):
+#     reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
 #     source = models.CharField(
 #         max_length=100, verbose_name="Source", help_text="Entrez la source du chat"
 #     )

@@ -1,12 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
 from .models import Exercice, Patient, PlanDeSuivi, RendezVous, Room, Message
-=======
 from .models import Exercice, Patient, PlanDeSuivi, RendezVous, Seance
->>>>>>> 65a67a021da2f8f33075ef68d2fa1aa95602a40e
 from django.utils import timezone
+
 # Create your views here.
 app_name = "dashboard"
 app_path = "dashboard/patient/"
@@ -35,7 +33,7 @@ def home(request):
     return render(request, f"{app_path}dashboard.html", locals())
 
 
-@login_required(login_url='/authentication/login')
+# @login_required(login_url='/authentication/login')
 class PlanDeSuiviView(ListView):
     model = PlanDeSuivi
     template_name = f"{app_path}plan_de_suivi.html"
@@ -68,7 +66,7 @@ class PlanDeSuiviView(ListView):
         return context
     
 
-@login_required(login_url='/authentication/login')
+# @login_required(login_url='/authentication/login')
 class ValidateSeance(ListView):
     model = PlanDeSuivi
     template_name = f"{app_path}plan_de_suivi.html"
