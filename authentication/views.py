@@ -3,7 +3,7 @@ from django.views import View
 from django.contrib.auth import authenticate, login
 from django import forms
 from .models import CustomUser  # Assure-toi d'importer correctement ton modèle CustomUser
-
+from dashboard.models import Patient
 # Create your views here.
 class LoginView(View):
     template_name = 'connexion.html'
@@ -60,6 +60,10 @@ class RegisterView(View):
             return render(request, self.template_name, {'error_message': 'Le mot de passe doit comporter au moins 8 caractères...', 'username':username, 'email':email})
         display_password = f"{password[:2]}{'*' * (len(password) - 4)}{password[-2:]}"        
         user = CustomUser.objects.create_user(username=username, email=email, password=password,is_active=False)
+        if user:
+            patient = Patient.objects.create(
+                user_reference = user
+            )
         is_regitred = True
         # Redirige vers la page souhaitée après l'inscription réussie
         return render(request, self.template_name, {'is_regitred': is_regitred, 'username':username, 'password':display_password})

@@ -128,11 +128,15 @@ class Patient(models.Model):
         max_length=100,
         verbose_name="Ville",
         help_text="Entrez la ville de l'utilisateur",
+        blank=True, 
+        null=True
     )
     quartier = models.CharField(
         max_length=100,
         verbose_name="Quartier",
         help_text="Entrez le quartier de l'utilisateur",
+        blank=True,
+        null=True
     )
     commandes = models.ManyToManyField(Commande, related_name='patients', blank=True)
     antecedents_medicaux = models.ManyToManyField(AntecedantsMedicaux, related_name='patients_antecedents_medicaux', blank=True)
@@ -194,7 +198,12 @@ class Seance(models.Model):
     )
     is_validated = models.BooleanField(default=False)
     comment = models.TextField(max_length=2048, verbose_name="Comment", help_text='Entrez le commentaire de la séance', default='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos ut labore rem porro. Totam culpa atque ad! Numquam, deleniti cupiditate est ea, cum repellat saepe animi accusamus aliquid necessitatibus facilis?')
-
+    date_validation = models.DateTimeField(null=True, blank=True)
+    
+    def valider_seance(self):
+        self.is_validated = True
+        self.date_validation = timezone.now()
+        self.save()
 class Chat(models.Model):
     reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.decorators import login_required
-from .models import Exercice, Patient, PlanDeSuivi, RendezVous
+from .models import Exercice, Patient, PlanDeSuivi, RendezVous, Seance
 from django.utils import timezone
 # Create your views here.
 app_name = "dashboard"
@@ -42,7 +42,7 @@ class PlanDeSuiviView(ListView):
         pds = PlanDeSuivi.objects.filter(patient=patient).first()
         exercice = Exercice.objects.filter(plan_de_suivi=pds).last()
         #exercice = get_object_or_404(Exercice, reference_id=exercie.reference_id)
-        seance_actuelle = exercice.seances().filter(is_validated=True).first()
+        seance_actuelle = exercice.seances().filter(is_validated=True).last()
         seance_precedente = None
         if seance_actuelle:
             seance_precedente = exercice.seances().filter(reference_id__lt=seance_actuelle.reference_id).last()
@@ -58,7 +58,33 @@ class PlanDeSuiviView(ListView):
         context['seance_precedente'] = seance_precedente
         context['seance_suivante'] = seance_suivante
         context['seances'] = seances
+        
+        for seance in seances:
+            print(seance.is_validated)
         return context
+    
+
+class ValidateSeance(ListView):
+    model = PlanDeSuivi
+    template_name = f"{app_path}plan_de_suivi.html"
+    def get(self, request, *args, **kwargs):
+        exercice_id = kwargs.get('exercice_id') or None
+        seance_id = kwargs.get('seance_id') or None
+        seance_actuelle = None
+        seance_precedente = None
+        exercice = get_object_or_404(Exercice, reference_id=exercice_id)
+        seance = get_object_or_404(Seance, reference_id=seance_id)
+        seances = exercice.seances()
+        if seance is not None:
+            seance.valider_seance()
+            seance_actuelle = exercice.seances().filter(is_validated=True).last()
+            seance_precedente = exercice.seances().filter(reference_id__lt=seance_actuelle.reference_id).last()
+
+        
+        seance_suivante = exercice.seances().filter(reference_id__gt=seance_actuelle.reference_id).first()
+        seances = exercice.seances()
+        return render(request, self.template_name, locals())
+
     
 
 def videocall(request):
