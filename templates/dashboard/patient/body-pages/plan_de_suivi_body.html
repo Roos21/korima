@@ -6,9 +6,9 @@
       </div>
       <div class="list-group list-group-flush">
         <a href="#" class="list-group-item list-group-item-action active" aria-current="true">Rééducation</a>
-        <a href="#" class="list-group-item list-group-item-action">Suivi de la progression</a>
-        <a href="{% url 'dashboard:telereeducation' %}" class="list-group-item list-group-item-action">Télérééducation</a>
-        <a href="#" class="list-group-item list-group-item-action">Posez une question</a>
+        <a href="{% url 'dashboard:suivi_progression'  %}" class="list-group-item list-group-item-action">Suivi de la progression</a>
+        <a href="{% url 'dashboard:tele_reeducation' %}" class="list-group-item list-group-item-action">Télérééducation</a>
+        <a href="{% url 'dashboard:ask_question'  %}" class="list-group-item list-group-item-action">Posez une question</a>
       </div>
     </div>
   </div>
@@ -27,23 +27,21 @@
       <ul class="pagination">
         <li class="page-item disabled">
           {% if seance_precedente %}
-            <a class="page-link" href="{% url 'dashboard:exercice_detail' exercice.reference_id seance_precedente.reference_id %}" tabindex="-1" aria-disabled="true">
+            <a class="" href="{% url 'dashboard:exercice_detail' exercice.reference_id seance_precedente.reference_id %}">
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
                 <path d="M15 6l-6 6l6 6"></path>
-              </svg>Séance précédente
+              </svg> Séance précédente
             </a>
           {% else %}
           <a class="page-link" href="#" tabindex="-1" aria-disabled="true" style="color: goldenrod;">
             Vous êtes à la première séance
-          </a>
+          </a> 
           {% endif %}
-        </li>
-        <li></li>
-        <li></li>
+        </li>&nbsp;&nbsp;&nbsp;
         <li class="page-item">
           {% if seance_suivante %}
-            <a class="page-link" href="{% url 'dashboard:exercice_detail' exercice.reference_id seance_suivante.reference_id %}">
+            <a class="" href="{% url 'dashboard:exercice_detail' exercice.reference_id seance_suivante.reference_id %}">
               Valider la séance <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                 <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -67,20 +65,14 @@
             {% if s == seance_actuelle %}
               <li class="step-item active">
                 <div class="h4 m-0">
-                  <button class="btn position-relative" style="border: none;">
-                    {{ exercise.titre }} &nbsp;&nbsp;
-                    <span class="badge bg-blue badge-pill">{{ s.titre }}</span>
-                  </button>
+                  {{ s.titre }}
                 </div>
                 <div class="text-secondary mb-3">{{ s.comment }}</div>
               </li>
             {% else %}
               <li class="step-item">
                 <div class="h4 m-0">
-                  <button class="btn position-relative" style="border: none;">
-                    {{ exercise.titre }} &nbsp;&nbsp;
-                    <span class="badge bg-blue badge-pill">{{ s.titre }}</span>
-                  </button>
+                  {{ s.titre }}
                 </div>
                 <div class="text-secondary mb-3">{{ s.comment }}</div>
               </li>
