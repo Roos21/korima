@@ -1,0 +1,109 @@
+<div class="row">
+  <div class="col-sm-12 col-lg-3">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title">Gérer mon espace</h3>
+      </div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">Rééducation</a>
+        <a href="{% url 'dashboard:suivi_progression'  %}" class="list-group-item list-group-item-action">Suivi de la progression</a>
+        <a href="{% url 'dashboard:tele_reeducation' %}" class="list-group-item list-group-item-action">Télérééducation</a>
+        <a href="{% url 'dashboard:ask_question'  %}" class="list-group-item list-group-item-action">Posez une question</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-10 col-lg-5">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">{{ plan_de_suivi.reference_id }}</h3>
+        {% comment %} <p class="text-secondary">{{ plan_de_suivi.description }}</p> {% endcomment %}
+      </div>
+      <center>
+        <iframe width="460" height="250" src="https://www.youtube.com/embed/RNM11Ix_7uw?si=ySAGIwsUBw_yssbj" title="Kinésitheurapie" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </center>
+    </div><br>
+    <div class="row">
+      <ul class="pagination">
+        <li class="page-item disabled">
+          {% if seance_precedente %}
+            <a class="" href="{% url 'dashboard:exercice_detail' exercice.reference_id seance_precedente.reference_id %}">
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M15 6l-6 6l6 6"></path>
+              </svg> Séance précédente
+            </a>
+          {% else %}
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true" style="color: goldenrod;">
+            Vous êtes à la première séance
+          </a> 
+          {% endif %}
+        </li>&nbsp;&nbsp;&nbsp;
+        <li class="page-item">
+          {% if seance_suivante %}
+            <a class="" href="{% url 'dashboard:exercice_detail' exercice.reference_id seance_suivante.reference_id %}">
+              Valider la séance <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                <path d="M9 6l6 6l-6 6"></path>
+              </svg>
+            </a>
+          {% else %}
+            <span>Fin de l'exercixe</span>
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col-sm-12 col-lg-4 text-center">
+    <div class="card">
+      <div class="card-body">
+        <h3 class="card-title">Votre programme de rééducation</h3>
+        <ul class="steps steps-counter steps-vertical">
+          {% for s in seances %}
+            {% if s == seance_actuelle %}
+              <li class="step-item active">
+                <div class="h4 m-0">
+                  {{ s.titre }}
+                </div>
+                <div class="text-secondary mb-3">{{ s.comment }}</div>
+              </li>
+            {% else %}
+              <li class="step-item">
+                <div class="h4 m-0">
+                  {{ s.titre }}
+                </div>
+                <div class="text-secondary mb-3">{{ s.comment }}</div>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      {% comment %} <div class="card-body">
+        <ul class="steps steps-counter steps-vertical">
+          <li class="step-item active">
+            <ul class="steps steps-counter steps-vertical">
+              {% for seance in exercise.seances %}
+                <li class="step-item d-flex">
+                  <div class="col-auto">
+                    <a href="#"><span class="avatar" style="background-image: url(./static/avatars/000f.jpg)"></span></a>
+                  </div>&nbsp;&nbsp;&nbsp;
+                  <div class="col text-truncate">
+                    <a href="#" class="text-reset d-block">{{ seance.titre }}</a>
+                    <div class="d-block text-secondary text-truncate mt-n1">Some minor text tweaks</div>
+                  </div>
+                  <div class="col-auto">
+                    <a href="#" class="list-group-item-actions"><span class="badge bg-cyan-lt">0%</span></a>
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </li>
+          {% endfor %}
+        </ul>
+      </div> {% endcomment %}
+    </div>
+  </div>
+</div>

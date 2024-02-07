@@ -1,11 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView
+from django.views import View
 from django.contrib.auth.decorators import login_required
-from .models import Exercice, Patient, PlanDeSuivi, RendezVous, Seance
+from .models import Exercice, Patient, PlanDeSuivi, RendezVous, Room, Message, Seance, Praticien
 from django.utils import timezone
+
 # Create your views here.
 app_name = "dashboard"
 app_path = "dashboard/patient/"
+app_path_admin = "dashboard/praticien"
 
 def get_patient_from_user(user_instance):
     try:
@@ -31,6 +34,12 @@ def home(request):
     return render(request, f"{app_path}dashboard.html", locals())
 
 
+@login_required(login_url='/authentication/login')
+def dashboard_praticien(request):
+
+    return render(request, f"{app_path_admin}dashboard.html", locals())
+
+# @login_required(login_url='/authentication/login')
 class PlanDeSuiviView(ListView):
     model = PlanDeSuivi
     template_name = f"{app_path}plan_de_suivi.html"
@@ -63,6 +72,7 @@ class PlanDeSuiviView(ListView):
         return context
     
 
+# @login_required(login_url='/authentication/login')
 class ValidateSeance(ListView):
     model = PlanDeSuivi
     template_name = f"{app_path}plan_de_suivi.html"
@@ -86,7 +96,45 @@ class ValidateSeance(ListView):
 
 def videocall(request):
 
-    name = "Anonyme"
+    name = request.user
     return render(request, f"{app_path}video_call.html", {'name':name})
 
+
+# @login_required
+# def rooms(request):
+#     """ Liste des groupe de chat """
+#     rooms = Room.objects.all()
+#     return render(request, 'room/rooms.html', {'rooms': rooms})
+
+@login_required
+def room(request):
+
+    user = request.user.username    
+    room_name = Room.objects.get(slug__contains=request.user.username)
+    rooms = Room.objects.all()
+
+    #praticien = get_object_or_404(Praticien, user_reference=request.user)
+
+
+
+    messages = Message.objects.filter(room=room_name)[0:30]
+    return render(
+        request, 
+        f"{app_path}messagerie.html", 
+        {
+            'room': room_name, 
+            'messages':messages, 
+            'username': user,
+            'rooms':rooms,
+            #'praticien':praticien
+        }
+    )
+
+
+class ConditionUtilisation(View):
+    template_name = 'condition.html'
+
+    def get(self, request):
+        # Affiche le formulaire d'inscription en cas de requête GET
+        return render(request, self.template_name)
 

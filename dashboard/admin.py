@@ -47,3 +47,14 @@ class CommandeAdmin(admin.ModelAdmin):
     search_fields = ['equipement__nom', 'patient__nom']
     list_filter = ['date']
     ordering = ['-date']
+
+
+@admin.register(Room)
+class RoomAdmin(admin.ModelAdmin):
+    list_display = ('name', 'slug',)
+    search_fields = ('name',)
+
+@admin.register(Message)
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('reference_id', 'room', 'user', 'content', 'date_added',)
+    search_fields = ('room__name', 'user__username',)    

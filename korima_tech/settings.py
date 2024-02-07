@@ -26,13 +26,14 @@ SECRET_KEY = "django-insecure-hq06(=kcg5fya)^0a#ojkkjpf0))!nhy=(dfrx(_any*%8_w_=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 AUTH_USER_MODEL = "authentication.CustomUser"
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
     "clearcache",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -41,8 +42,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # news app here
+    "channels",
+    "ckeditor",
     "dashboard",
     "authentication",
+    "equipements",
 ]
 
 MIDDLEWARE = [
@@ -80,6 +84,22 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "korima_tech.wsgi.application"
+ASGI_APPLICATION = 'korima_tech.asgi.application'
+
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels.layers.InMemoryChannelLayer'
+#     }
+# }
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}
 
 
 # Database

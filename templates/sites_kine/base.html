@@ -53,7 +53,7 @@
   <header id="header" class="fixed-top">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="index.html">Korima Tech</a></h1>
+      <h1 class="logo me-auto"><a href="/">Korima Tech</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="{% static 'assets/img/logo.png" alt="" class="img-fluid"></a>-->
       {% block menu %}
@@ -80,7 +80,7 @@
             </ul>
           </li> {% endcomment %}
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          <li><a class="nav-link scrollto" href="#">Equipements de rééducation</a></li>
+          <li><a class="nav-link scrollto" href="{% url 'equipement:equipement' %}">Equipements de rééducation</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -89,7 +89,7 @@
 
     </div>
   </header><!-- End Header -->
-
+  {% block hero %}
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container" style="border-radius: 2px; border: #000;">
@@ -97,7 +97,9 @@
       <h2 style="color : #1977cc; ;font-size: 30pt;"><strong>Votre bien être, notre raison d'être!!!</strong></h2>
     </div>
   </section><!-- End Hero -->
+  {% endblock %}
 
+    {% block main %}
   <main id="main">
 
     <!-- ======= Why Us Section ======= -->
@@ -308,12 +310,14 @@
     </section><!-- End Contact Section -->
 
   </main><!-- End #main -->
+  {% endblock %}
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
-
     <div class="footer-top">
       <div class="container">
+
+        {% block newsletter %}
         <div class="row">
         {% if messages %}
             <ul class="messages">
@@ -344,6 +348,8 @@
           </div>
 
         </div>
+        {% endblock %}
+
       </div>
     </div>
 

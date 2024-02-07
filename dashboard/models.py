@@ -8,9 +8,25 @@ from authentication.models import CustomUser
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
 from django.core.validators import MinValueValidator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.utils.text import slugify
 
 # from phonenumber_field.modelfields import PhoneNumberField
 
+class Room(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField(unique=True)
+
+class Message(models.Model):
+    reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
+    room = models.ForeignKey(Room, related_name='messages', on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, related_name='users', on_delete=models.CASCADE)
+    content = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('date_added',)
 
 class Genre(models.Model):
     GENRE = (
@@ -141,6 +157,14 @@ class Patient(models.Model):
     commandes = models.ManyToManyField(Commande, related_name='patients', blank=True)
     antecedents_medicaux = models.ManyToManyField(AntecedantsMedicaux, related_name='patients_antecedents_medicaux', blank=True)
 
+@receiver(post_save, sender=Patient)
+def create_room_for_patient(sender, instance, created, **kwargs):
+    if created:
+        Room.objects.create(
+            name=f"S{instance.user_reference.username}",
+            slug=slugify(f"room_{instance.user_reference.username}")
+        )
+
 
 
 class PlanDeSuivi(models.Model):
@@ -205,26 +229,28 @@ class Seance(models.Model):
     )
     is_validated = models.BooleanField(default=False)
     comment = models.TextField(max_length=2048, verbose_name="Comment", help_text='Entrez le commentaire de la séance', default='Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos ut labore rem porro. Totam culpa atque ad! Numquam, deleniti cupiditate est ea, cum repellat saepe animi accusamus aliquid necessitatibus facilis?')
+
+# class Chat(models.Model):
+#     reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
     date_validation = models.DateTimeField(null=True, blank=True)
     
     def valider_seance(self):
         self.is_validated = True
         self.date_validation = timezone.now()
         self.save()
-class Chat(models.Model):
-    reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
-
-    source = models.CharField(
-        max_length=100, verbose_name="Source", help_text="Entrez la source du chat"
-    )
-    destinateur = models.CharField(
-        max_length=100,
-        verbose_name="Destinataire",
-        help_text="Entrez le destinataire du chat",
-    )
-    message = models.TextField(
-        verbose_name="Message", help_text="Entrez le message du chat"
-    )
+# class Chat(models.Model):
+#     reference_id = HashidField(prefix="chat_", min_length=20, primary_key=True)
+#     source = models.CharField(
+#         max_length=100, verbose_name="Source", help_text="Entrez la source du chat"
+#     )
+#     destinateur = models.CharField(
+#         max_length=100,
+#         verbose_name="Destinataire",
+#         help_text="Entrez le destinataire du chat",
+#     )
+#     message = models.TextField(
+#         verbose_name="Message", help_text="Entrez le message du chat"
+#     )
 
 
 class RendezVous(models.Model):
@@ -312,5 +338,8 @@ class ContactUs(models.Model):
     class Meta:
         verbose_name = 'Boite à lettre'
         verbose_name_plural = 'Boite à lettre'
+
+post_save.connect(create_room_for_patient, sender=Patient)
+
 
 
