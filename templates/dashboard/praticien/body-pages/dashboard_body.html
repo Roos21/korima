@@ -1,0 +1,77 @@
+<div class="row">
+  <div class="col-sm-12 col-lg-6 mt-2">
+    <div class="card p-5">
+      <h1>Rendez-vous à venir</h1>
+
+      {% if patient_rendezvous %}
+        <div class="table-responsive">
+          <table class="table table-vcenter card-table">
+            <thead>
+              <tr>
+                <th>Praticien</th>
+                <th>Date</th>
+                <th>Lieu</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% for rendezvous in patient_rendezvous %}
+                    <tr>
+                        <td>
+                        <div class="d-flex py-1 align-items-center">
+                            <span class="avatar me-2" style="background-image: url(./static/avatars/006m.jpg)"></span>
+                            <div class="flex-fill">
+                            <div class="font-weight-medium">{{ rendezvous.praticien.user_reference.get_full_name }}</div>
+                            <div class="text-secondary">
+                                <a href="mailto:{{rendezvous.praticien.user_reference.email}}" class="text-reset">{{rendezvous.praticien.user_reference.email}}</a>
+                            </div>
+                            </div>
+                        </div>
+                        </td>
+                        <td>
+                        <div>{{ rendezvous.date }}</div>
+                        <div class="badge badge bg-indigo-lt">{{rendezvous.time_until_rendezvous}}</div>
+                        </td>
+                        <td class="text-secondary">{{ rendezvous.lieu }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <p>Aucun rendez-vous à venir.</p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="col-sm-12 col-lg-6 mt-2">
+    <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Plans de suivi</h3>
+          </div>
+          <div class="list-group list-group-flush list-group-hoverable">
+            {% for p in pds %}
+                <div class="list-group-item">
+                <div class="row align-items-center">
+                    <div class="col-auto"><span class="badge bg-red"></span></div>
+                    <div class="col-auto">
+                    <a href="#">
+                        <span class="avatar" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                    </a>
+                    </div>
+                    <div class="col text-truncate">
+                    <a href="#" class="text-reset d-block">ID : {{p.reference_id}}</a>
+                    <div class="d-block text-secondary text-truncate mt-n1">{{p.description}}</div>
+                    </div>
+                    <div class="col-auto">
+                    <a href="#" class="list-group-item-actions"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon text-secondary" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path></svg>
+                    </a>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
