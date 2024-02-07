@@ -183,7 +183,14 @@ class Exercice(models.Model):
         return Seance.objects.filter(exercice=self).count()
     def seances(self):
         return Seance.objects.filter(exercice=self)
+    
+    def pourcentage_progres(self):
+        total_seances = self.nb_seances()
+        seances_validees = self.seances().filter(is_valided=True).count()
 
+        if total_seances == 0:
+            return 0
+        return (seances_validees / total_seances) * 100
 class Seance(models.Model):
     reference_id = HashidField(prefix="session_", min_length=20, primary_key=True)
 

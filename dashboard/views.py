@@ -31,7 +31,6 @@ def home(request):
     return render(request, f"{app_path}dashboard.html", locals())
 
 
-@login_required(login_url='/authentication/login')
 class PlanDeSuiviView(ListView):
     model = PlanDeSuivi
     template_name = f"{app_path}plan_de_suivi.html"
@@ -64,13 +63,10 @@ class PlanDeSuiviView(ListView):
         return context
     
 
-@login_required(login_url='/authentication/login')
 class ValidateSeance(ListView):
     model = PlanDeSuivi
     template_name = f"{app_path}plan_de_suivi.html"
     def get(self, request, *args, **kwargs):
-        exercice_id = kwargs.get('exercice_id') or None
-        seance_id = kwargs.get('seance_id') or None
         seance_actuelle = None
         seance_precedente = None
         exercice = get_object_or_404(Exercice, reference_id=exercice_id)
