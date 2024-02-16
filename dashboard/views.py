@@ -48,12 +48,14 @@ class PlanDeSuiviView(ListView):
         # Call the base implementation first to get a context
         patient = Patient.objects.get(user_reference=self.request.user)
         pds = PlanDeSuivi.objects.filter(patient=patient).first()
-        exercice = Exercice.objects.filter(plan_de_suivi=pds).last()
+        exercice = Exercice.objects.filter(plan_de_suivi=pds).last() #On va s'interesser au dernier exercice en pratique
         #exercice = get_object_or_404(Exercice, reference_id=exercie.reference_id)
         seance_actuelle = exercice.seances().filter(is_validated=True).last()
         seance_precedente = None
         if seance_actuelle:
             seance_precedente = exercice.seances().filter(reference_id__lt=seance_actuelle.reference_id).last()
+
+        #print(seance_actuelle)
 
         # Récupérer la séance suivante
         seance_suivante = exercice.seances().filter(reference_id__gt=seance_actuelle.reference_id).first()
@@ -77,6 +79,8 @@ class ValidateSeance(ListView):
     model = PlanDeSuivi
     template_name = f"{app_path}plan_de_suivi.html"
     def get(self, request, *args, **kwargs):
+        exercice_id = kwargs.get('exercice_id') or None
+        seance_id = kwargs.get('seance_id') or None
         seance_actuelle = None
         seance_precedente = None
         exercice = get_object_or_404(Exercice, reference_id=exercice_id)
@@ -91,7 +95,6 @@ class ValidateSeance(ListView):
         seance_suivante = exercice.seances().filter(reference_id__gt=seance_actuelle.reference_id).first()
         seances = exercice.seances()
         return render(request, self.template_name, locals())
-
     
 
 def videocall(request):

@@ -1,68 +1,21 @@
-<html>
 
-<head>
-    <style>
-        #root {
-            width: 100vw;
-            height: 100vh;
-            }
-    </style>
-</head>
-
-
-<body>
-    <div id="root"></div>
-</body>
-<script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
-<script>
-window.onload = function () {
-    function getUrlParams(url) {
-        let urlStr = url.split('?')[1];
-        const urlSearchParams = new URLSearchParams(urlStr);
-        const result = Object.fromEntries(urlSearchParams.entries());
-        return result;
-    }
-
-
-        // Generate a Token by calling a method.
-        // @param 1: appID
-        // @param 2: serverSecret
-        // @param 3: Room ID
-        // @param 4: User ID
-        // @param 5: Username
-    const roomID = getUrlParams(window.location.href)['roomID'] || (Math.floor(Math.random() * 10000) + "");
-    const userID = Math.floor(Math.random() * 10000) + "";
-    const userName = "{{ name }}"
-    const appID = 296257745; //change this
-    const serverSecret = "ae64b4d9cd5cd1f6a79914ebc0a58f56"; // change this
-    const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(appID, serverSecret, roomID, userID, userName);
-
-    
-        const zp = ZegoUIKitPrebuilt.create(kitToken);
-        zp.joinRoom({
-            container: document.querySelector("#root"),
-            sharedLinks: [{
-                name: 'Personal link',
-                url: window.location.protocol + '//' + window.location.host  + window.location.pathname + '?roomID=' + roomID,
-            }],
-            scenario: {
-                mode: ZegoUIKitPrebuilt.VideoConference,
-            },
-                
-           	turnOnMicrophoneWhenJoining: false,
-           	turnOnCameraWhenJoining: false,
-           	showMyCameraToggleButton: true,
-           	showMyMicrophoneToggleButton: true,
-           	showAudioVideoSettingsButton: true,
-           	showScreenSharingButton: true,
-           	showTextChat: true,
-           	showUserList: true,
-           	maxUsers: 50,
-           	layout: "Grid",
-           	showLayoutButton: true,
-         
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <script src='https://8x8.vc/vpaas-magic-cookie-4059e3d3f56740e591ecc9a242cfa4bc/external_api.js' async></script>
+        <style>html, body, #jaas-container { height: 100%; }</style>
+        <script type="text/javascript">
+          window.onload = () => {
+            const api = new JitsiMeetExternalAPI("8x8.vc", {
+              roomName: "vpaas-magic-cookie-4059e3d3f56740e591ecc9a242cfa4bc/SampleAppLifelongIntentsLeadSuccessfully",
+              parentNode: document.querySelector('#jaas-container'),
+							// Make sure to include a JWT if you intend to record,
+							// make outbound calls or use any other premium features!
+							// jwt: "eyJraWQiOiJ2cGFhcy1tYWdpYy1jb29raWUtNDA1OWUzZDNmNTY3NDBlNTkxZWNjOWEyNDJjZmE0YmMvYWM5MGFiLVNBTVBMRV9BUFAiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiJqaXRzaSIsImlzcyI6ImNoYXQiLCJpYXQiOjE3MDc1MjIzNDIsImV4cCI6MTcwNzUyOTU0MiwibmJmIjoxNzA3NTIyMzM3LCJzdWIiOiJ2cGFhcy1tYWdpYy1jb29raWUtNDA1OWUzZDNmNTY3NDBlNTkxZWNjOWEyNDJjZmE0YmMiLCJjb250ZXh0Ijp7ImZlYXR1cmVzIjp7ImxpdmVzdHJlYW1pbmciOmZhbHNlLCJvdXRib3VuZC1jYWxsIjpmYWxzZSwic2lwLW91dGJvdW5kLWNhbGwiOmZhbHNlLCJ0cmFuc2NyaXB0aW9uIjpmYWxzZSwicmVjb3JkaW5nIjpmYWxzZX0sInVzZXIiOnsiaGlkZGVuLWZyb20tcmVjb3JkZXIiOmZhbHNlLCJtb2RlcmF0b3IiOnRydWUsIm5hbWUiOiJUZXN0IFVzZXIiLCJpZCI6Imdvb2dsZS1vYXV0aDJ8MTE0NzAxMjAzODYxMzA1Njc0ODYwIiwiYXZhdGFyIjoiIiwiZW1haWwiOiJ0ZXN0LnVzZXJAY29tcGFueS5jb20ifX0sInJvb20iOiIqIn0.p49izm9V4s-b8nujkU60lQBuoROrJ_tU_6FhHCtMeDm-9yhh3Bg3aH_MMHdzYIjPAFZ_BQF_-io7bE089chInn1InLlG3WhXMciopj5LAa2_luinLq66miGiQCUXzV-4ci2-5zTn0l-A63URiwXC20JH0z6WNfZSTcZpCTmtwcL5s_6SqIMOvC0e8Bq6VcuYnI3lZm0EyqcQfTxXJSZ9uASX12FYLLLaQhjMdxFrBZlX2icAi06xiKIxmHV5ubusEV3EGt9gI7Q3CsEB1-ZTz_sgflZ2S4j0VsYClRDsBjbvdroLlIZ3uBgskvPO31MUO01UWRNPoOyapQZ-c0poCg"
             });
-}
-</script>
-
-</html>
+          }
+        </script>
+      </head>
+      <body><div id="jaas-container" /></body>
+    </html>
+  
